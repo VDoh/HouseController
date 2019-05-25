@@ -1,0 +1,20 @@
+{% extends "main/header.html" %}
+
+{% block content %}
+
+{% for i in temp %}
+
+    <ul class="collection">
+    <li class="collection-item avatar">
+      <i class="material-icons circle red"></i>
+      <span class="title">Temperatura</span>
+      <p>Data: {{ i.date }} <br>
+         Odczyt: {{ i.temperature }}
+      </p>
+      <a href="" class="secondary-content"><i class="material-icons"></i></a>
+    </li>
+ </ul>
+
+{% endfor %}
+
+{% endblock%}
