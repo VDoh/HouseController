@@ -1,0 +1,16 @@
+{% extends "main/header.html" %}
+
+{% block content %}
+
+<ul class="collection">
+    <li class="collection-item avatar">
+      <i class="material-icons circle red"></i>
+      <span class="title">Temperatura</span>
+      <p>Data: {{ temp.date }} <br>
+         Odczyt: {{ temp.temperature }}
+      </p>
+      <a href="/temp" class="secondary-content"><i class="material-icons">Wykonaj ponownie</i></a>
+    </li>
+ </ul>
+
+{% endblock%}
