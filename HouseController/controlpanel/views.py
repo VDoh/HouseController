@@ -1,13 +1,14 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
 from .models import Temperature
 from django.views import View
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .serializers import TemperatureSerializer
 import datetime
 import RPi.GPIO as GPIO
 import time
 import w1thermsensor
-
-
 
 
 class HomeView(View):
@@ -39,3 +40,29 @@ class TemperatureMes(View):
         tempo = Temperature.objects.create(temperature=temperature, date=date)
 
         return render(request, self.template_name, {'temp': tempo})
+
+class ShowApi(APIView):
+
+    def get(self, format=None):
+
+        temperature = Temperature.objects.all()
+        serializer = TemperatureSerializer(temperature, many=True)
+
+        return Response(serializer.data)
+
+class ShowApiDetail(APIView):
+
+    def get_object(self, pk):
+
+        try:
+            return Temperature.objects.get(pk=pk)
+        except Temperature.DoesNotExist:
+            raise Http404
+
+    def get(self,request, pk, format=None):
+
+        temperature = self.get_object(pk)
+        serializer = TemperatureSerializer(temperature)
+
+        return Response(serializer.data)
+
